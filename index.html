@@ -1,0 +1,63 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <link rel="icon" type="image/svg+xml" href="/goit-js-hw-11/favicon.svg" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Gallery</title>
+    <link
+      rel="stylesheet"
+      href="https://cdnjs.cloudflare.com/ajax/libs/modern-normalize/2.0.0/modern-normalize.min.css"
+    />
+    <!-- <link rel="stylesheet" href="iziToast.min.css" /> -->
+    
+    <script type="module" crossorigin src="/goit-js-hw-11/commonHelpers.js"></script>
+    <link rel="modulepreload" crossorigin href="/goit-js-hw-11/assets/vendor-46aac873.js">
+    <link rel="stylesheet" href="/goit-js-hw-11/assets/vendor-eb6030bc.css">
+    <link rel="stylesheet" href="/goit-js-hw-11/assets/index-49b248f4.css">
+  </head>
+  <body>
+    <div class="cont-bar">
+      <div class="marvel">
+        <img
+          class="cap"
+          src="/goit-js-hw-11/assets/cap-b18bc15e.svg"
+          alt="cap"
+          width="50px"
+          height="50px"
+        />
+        <img
+          class="spiderman"
+          src="/goit-js-hw-11/assets/spiderman-e500461b.png"
+          alt="spiderman"
+          width="200"
+          height="200"
+        />
+      </div>
+
+      <section class="section-bar">
+        <h1 class="h-bar">Welcome to Image MARVEL!</h1>
+        <!-- Path to images as from index.html file -->
+        <img class="img-bar" src="/goit-js-hw-11/assets/javascript-8dac5379.svg" alt="" />
+      </section>
+      <div class="search-container">
+        <form class="search-form">
+          <input
+            id="search-form"
+            class="input-form"
+            type="text"
+            name="search"
+            placeholder="Enter MARVEL"
+            required
+          />
+          <button class="btn-form" type="submit">Search</button>
+        </form>
+      </div>
+
+      <div class="loader is-hidden"></div>
+      <div class="gallery"></div>
+    </div>
+    
+    <!-- <script src="iziToast.min.js" type="text/javascript"></script> -->
+  </body>
+</html>
