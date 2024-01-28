@@ -76,8 +76,6 @@ function displayImages(images) {
 }
 
 function createImageCard(image) {
-  const { likes, views, comments, downloads } = image;
-
   const card = document.createElement('div');
   card.classList.add('card');
 
@@ -90,20 +88,33 @@ function createImageCard(image) {
   img.src = image.webformatURL;
   img.alt = image.tags;
 
-  // const commentDiv = document.createElement('div');
-  // commentDiv.classList.add('comments');
   const listCom = document.createElement('ul');
   listCom.classList.add('comments');
-  const itemListCom = document.createElement('li');
-  itemListCom.classList.add('item-list-com');
-  itemListCom.textContent = `Comments: ${comments},Likes: ${likes}, Views: ${views},Downloads: ${downloads}`;
 
-  listCom.appendChild(itemListCom);
-  // commentDiv.appendChild(listCom);
+  const likesItem = document.createElement('li');
+  likesItem.classList.add('list-item-com');
+  likesItem.textContent = `Likes: ${image.likes}`;
+  listCom.appendChild(likesItem);
+
+  const viewsItem = document.createElement('li');
+  viewsItem.classList.add('list-item-com');
+  viewsItem.textContent = `Views: ${image.views}`;
+  listCom.appendChild(viewsItem);
+
+  const commentsItem = document.createElement('li');
+  commentsItem.classList.add('list-item-com');
+  commentsItem.textContent = `Comments: ${image.comments}`;
+  listCom.appendChild(commentsItem);
+
+  const downloadsItem = document.createElement('li');
+  downloadsItem.classList.add('list-item-com');
+  downloadsItem.textContent = `Downloads: ${image.downloads}`;
+  listCom.appendChild(downloadsItem);
+
   link.appendChild(img);
-  link.appendChild(listCom);
+  card.appendChild(listCom);
   card.appendChild(link);
-  // card.appendChild(commentDiv);
+
   return card;
 }
 

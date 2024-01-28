@@ -49,6 +49,7 @@ img {
   width: 360px;
   display: flex;
   padding: 5px;
+  padding-left: 8px;
   border-radius: 5px;
   border: 1px solid seagreen;
   box-shadow: 4px 6px 5px 3px;
