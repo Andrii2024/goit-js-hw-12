@@ -4,6 +4,7 @@ import iziToast from 'izitoast';
 import 'izitoast/dist/css/iziToast.min.css';
 import SimpleLightbox from 'simplelightbox';
 import 'simplelightbox/dist/simple-lightbox.min.css';
+import axios from 'axios';
 
 const form = document.querySelector('.search-form');
 const gallery = document.querySelector('.gallery');
@@ -89,13 +90,20 @@ function createImageCard(image) {
   img.src = image.webformatURL;
   img.alt = image.tags;
 
-  const commentDiv = document.createElement('div');
-  commentDiv.classList.add('comments');
-  commentDiv.textContent = `Comments: ${comments},Likes: ${likes}, Views: ${views},Downloads: ${downloads}`;
+  // const commentDiv = document.createElement('div');
+  // commentDiv.classList.add('comments');
+  const listCom = document.createElement('ul');
+  listCom.classList.add('comments');
+  const itemListCom = document.createElement('li');
+  itemListCom.classList.add('item-list-com');
+  itemListCom.textContent = `Comments: ${comments},Likes: ${likes}, Views: ${views},Downloads: ${downloads}`;
 
-  card.appendChild(commentDiv);
-  card.appendChild(link);
+  listCom.appendChild(itemListCom);
+  // commentDiv.appendChild(listCom);
   link.appendChild(img);
+  link.appendChild(listCom);
+  card.appendChild(link);
+  // card.appendChild(commentDiv);
   return card;
 }
 
