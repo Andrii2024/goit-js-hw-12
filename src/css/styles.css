@@ -132,6 +132,24 @@ img {
   transform: scale(1.1);
   box-shadow: 5px 6px 7px;
 }
+.load-more-btn {
+  display: none;
+  margin-top: 80px;
+  padding: 10px 20px;
+  font-size: 16px;
+  background-color: #4caf50;
+  color: #fff;
+  border: none;
+  cursor: pointer;
+  border-radius: 6px;
+  transition: transform 0.4s;
+}
+.load-more-btn:hover {
+  background-color: #45a049;
+  color: #fafafa;
+  transform: scale(1.1);
+  box-shadow: 5px 6px 7px;
+}
 .loader {
   transform: rotateZ(45deg);
   perspective: 1000px;
@@ -139,6 +157,7 @@ img {
   width: 70px;
   height: 70px;
   color: #fff;
+  /* margin-top: 50px; */
 }
 .is-hidden {
   display: none;

@@ -9,6 +9,7 @@ import axios from 'axios';
 const form = document.querySelector('.search-form');
 const gallery = document.querySelector('.gallery');
 const loader = document.querySelector('.loader');
+const loadMoreBtn = document.querySelector('.load-more-btn');
 
 const lightbox = new SimpleLightbox('.gallery a', {
   captionPosition: 'bottom',
@@ -18,63 +19,104 @@ const lightbox = new SimpleLightbox('.gallery a', {
 });
 
 let searchQuery = '';
+let page = 1;
+const limit = 40;
 
 form.addEventListener('submit', onSabmit);
+loadMoreBtn.addEventListener('click', loadMoreImages);
+
 function onSabmit(e) {
   e.preventDefault();
   searchQuery = e.target.elements.search.value.trim();
   if (searchQuery) {
     clearGallery();
     showLoader();
-    searchImages(searchQuery);
+    page = 1;
+    searchImages(searchQuery, page);
   }
   e.target.reset();
 }
 
-function searchImages(q) {
+async function searchImages(q, page) {
   const API_KEY = '42003708-c000c9a8ce48958e4d2fbd571';
-  const PARAMS = new URLSearchParams({
-    key: API_KEY,
-    q,
-    image_type: 'photo',
-    orientation: 'horizontal',
-    safesearch: true,
-  });
   const BAS_EURL = 'https://pixabay.com/api';
-  const url = `${BAS_EURL}/?${PARAMS}`;
 
-  return fetch(url)
-    .then(response => response.json())
-    .then(data => {
-      hideLoader();
-      if (data.hits.length > 0) {
-        displayImages(data.hits);
-      } else {
-        showNoResultsMessage();
-      }
-    })
-    .catch(error => {
-      console.error('Error fetching images:', error);
-      hideLoader();
-      showErrorMessage();
+  try {
+    const response = await axios.get(BAS_EURL, {
+      params: {
+        key: API_KEY,
+        q,
+        image_type: 'photo',
+        orientation: 'horizontal',
+        safesearch: true,
+        page,
+        per_page: limit,
+      },
     });
-}
+    hideLoader();
+    if (response.data.hits.length > 0) {
+      displayImages(response.data.hits);
+    } else {
+      showNoResultsMessage();
+    }
 
+    const totalPages = Math.ceil(response.data.totalHits / limit);
+    if (page >= totalPages) {
+      loadMoreBtn.style.display = 'none';
+      iziToast.info({
+        title: 'Info',
+        position: 'topRight',
+        color: 'green',
+        message: "We're sorry, but you've reached the end of search results.",
+      });
+    } else {
+      loadMoreBtn.style.display = 'block';
+    }
+  } catch (error) {
+    console.error('Error fetching images:', error);
+    hideLoader();
+    showErrorMessage();
+  }
+}
+// ==================================================
+//    Обмежена кількість карток додавання до галереї
+// ==================================================
 function displayImages(images) {
   const fragment = document.createDocumentFragment();
 
-  const limitedImages = images.slice(0, 9);
-
-  limitedImages.forEach(image => {
+  images.forEach(image => {
     const card = createImageCard(image);
     fragment.appendChild(card);
   });
 
   gallery.appendChild(fragment);
-
   lightbox.refresh();
 }
 
+function loadMoreImages() {
+  showLoader();
+  page += 1;
+  const cardHeight = getCardHeight();
+  searchImages(searchQuery, page);
+  scrollCard(cardHeight * 2);
+}
+// ===============SCROLL==============
+function scrollCard(distance) {
+  window.scrollBy({
+    top: distance,
+    behavior: 'smooth',
+  });
+}
+
+function getCardHeight() {
+  const card = document.querySelector('.card');
+  const cardRect = card.getBoundingClientRect();
+  return cardRect.height;
+}
+
+// ===============================
+//    Створення картки з описом
+// ===============================
 function createImageCard(image) {
   const card = document.createElement('div');
   card.classList.add('card');
@@ -117,7 +159,8 @@ function createImageCard(image) {
 
   return card;
 }
-
+//
+//
 function clearGallery() {
   gallery.innerHTML = '';
 }
