@@ -91,29 +91,23 @@ function displayImages(images) {
 
   gallery.appendChild(fragment);
   lightbox.refresh();
+  // smoothScroll();
 }
 
 function loadMoreImages() {
   showLoader();
   page += 1;
-  const cardHeight = getCardHeight();
   searchImages(searchQuery, page);
-  scrollCard(cardHeight * 2);
 }
 // ===============SCROLL==============
-function scrollCard(distance) {
-  window.scrollBy({
-    top: distance,
-    behavior: 'smooth',
-  });
-}
 
-function getCardHeight() {
-  const card = document.querySelector('.card');
-  const cardRect = card.getBoundingClientRect();
-  return cardRect.height;
-}
-
+// function smoothScroll() {
+//   const galleryHeight = card.getBoundingClientRect().height;
+//   window.scrollBy({
+//     top: galleryHeight * 2,
+//     behavior: 'smooth',
+//   });
+// }
 // ===============================
 //    Створення картки з описом
 // ===============================
