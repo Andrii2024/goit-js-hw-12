@@ -22,10 +22,9 @@ let searchQuery = '';
 let page = 1;
 const limit = 40;
 
-form.addEventListener('submit', onSabmit);
-loadMoreBtn.addEventListener('click', loadMoreImages);
+form.addEventListener('submit', onSubmit);
 
-function onSabmit(e) {
+function onSubmit(e) {
   e.preventDefault();
   searchQuery = e.target.elements.search.value.trim();
   if (searchQuery) {
@@ -37,21 +36,22 @@ function onSabmit(e) {
   e.target.reset();
 }
 
-async function searchImages(q, page) {
-  const API_KEY = '42003708-c000c9a8ce48958e4d2fbd571';
-  const BAS_EURL = 'https://pixabay.com/api/';
+const API_KEY = '42003708-c000c9a8ce48958e4d2fbd571';
+const BASE_URL = 'https://pixabay.com/api/';
 
+async function searchImages(q, page) {
+  const searchParams = {
+    key: API_KEY,
+    q,
+    image_type: 'photo',
+    orientation: 'horizontal',
+    safesearch: true,
+    page,
+    per_page: limit,
+  };
   try {
-    const response = await axios.get(BAS_EURL, {
-      params: {
-        key: API_KEY,
-        q,
-        image_type: 'photo',
-        orientation: 'horizontal',
-        safesearch: true,
-        page,
-        per_page: limit,
-      },
+    const response = await axios.get(BASE_URL, {
+      params: searchParams,
     });
     hideLoader();
     if (response.data.hits.length > 0) {
@@ -60,15 +60,17 @@ async function searchImages(q, page) {
       showNoResultsMessage();
     }
 
+    loadMoreBtn.addEventListener('click', loadMoreImages);
+
     const totalPages = Math.ceil(response.data.totalHits / limit);
     if (page >= totalPages) {
       loadMoreBtn.style.display = 'none';
-      iziToast.info({
-        title: 'Info',
-        position: 'topRight',
-        color: 'green',
-        message: "We're sorry, but you've reached the end of search results.",
-      });
+      // iziToast.info({
+      //   title: 'Info',
+      //   position: 'topRight',
+      //   color: 'green',
+      //   message: "We're sorry, but you've reached the end of search results.",
+      // });
     } else {
       loadMoreBtn.style.display = 'block';
     }
@@ -76,6 +78,23 @@ async function searchImages(q, page) {
     console.error('Error fetching images:', error);
     hideLoader();
     showErrorMessage();
+  }
+}
+function loadMoreImages() {
+  showLoader();
+  page += 1;
+  searchImages(searchQuery, page);
+  scrollToCardHeight();
+}
+function scrollToCardHeight() {
+  const elem = document.querySelector('.card');
+  if (elem) {
+    const rect = elem.getBoundingClientRect();
+    rect.height = rect.height * 2;
+    window.scrollBy({
+      top: rect.height,
+      behavior: 'smooth',
+    });
   }
 }
 // ==================================================
@@ -91,25 +110,21 @@ function displayImages(images) {
 
   gallery.appendChild(fragment);
   lightbox.refresh();
-  scroll();
+  // scroll();
 }
 
-function loadMoreImages() {
-  showLoader();
-  page += 1;
-  searchImages(searchQuery, page);
-}
 // ===============SCROLL==============
-function scroll() {
-  const galleryHeight = document
-    .querySelector('.card')
-    .getBoundingClientRect().height;
-  const total = galleryHeight * 2;
-  window.scrollBy({
-    top: total,
-    behavior: 'smooth',
-  });
-}
+
+// function scroll() {
+//   const galleryHeight = document
+//     .querySelector('.card')
+//     .getBoundingClientRect().height;
+//   const total = galleryHeight * 2;
+//   window.scrollBy({
+//     top: total,
+//     behavior: 'smooth',
+//   });
+// }
 // ===============================
 //    Створення картки з описом
 // ===============================
