@@ -91,7 +91,7 @@ function displayImages(images) {
 
   gallery.appendChild(fragment);
   lightbox.refresh();
-  // smoothScroll();
+  scroll();
 }
 
 function loadMoreImages() {
@@ -100,11 +100,43 @@ function loadMoreImages() {
   searchImages(searchQuery, page);
 }
 // ===============SCROLL==============
+function scroll() {
+  const galleryHeight = document
+    .querySelector('.card')
+    .getBoundingClientRect().height;
+  const total = galleryHeight * 2;
+  window.scrollBy({
+    top: total,
+    behavior: 'smooth',
+  });
+}
+// function scroll() {
+//   const cardHeight = document
+//     .querySelector('.card')
+//     .getBoundingClientRect().height;
 
-// function smoothScroll() {
-//   const galleryHeight = card.getBoundingClientRect().height;
+//   const totalCardHeight = cardHeight * 2;
 //   window.scrollBy({
-//     top: galleryHeight * 2,
+//     top: totalCardHeight,
+//     behavior: 'smooth',
+//   });
+// }
+
+// function scrollByTwoCardHeight() {
+//   const cardHeight = document.querySelector('.card').offsetHeight;
+//   window.scrollBy({
+//     top: cardHeight * 2,
+//     behavior: 'smooth',
+//   });
+// }
+// function smoothScroll() {
+//   const card = document.querySelector('.card');
+//   const cardHeight = card.getBoundingClientRect().height;
+//   const cardMarginBottom = parseInt(window.getComputedStyle(card).marginBottom);
+//   const totalCardHeight = cardHeight + cardMarginBottom;
+
+//   window.scrollBy({
+//     top: totalCardHeight * 2,
 //     behavior: 'smooth',
 //   });
 // }

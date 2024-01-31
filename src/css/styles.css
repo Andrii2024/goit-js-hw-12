@@ -70,6 +70,7 @@ img {
   border-radius: 8px;
 }
 .card {
+  height: 205px;
   position: relative;
   display: flex;
   flex-direction: column;
