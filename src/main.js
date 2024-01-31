@@ -110,36 +110,6 @@ function scroll() {
     behavior: 'smooth',
   });
 }
-// function scroll() {
-//   const cardHeight = document
-//     .querySelector('.card')
-//     .getBoundingClientRect().height;
-
-//   const totalCardHeight = cardHeight * 2;
-//   window.scrollBy({
-//     top: totalCardHeight,
-//     behavior: 'smooth',
-//   });
-// }
-
-// function scrollByTwoCardHeight() {
-//   const cardHeight = document.querySelector('.card').offsetHeight;
-//   window.scrollBy({
-//     top: cardHeight * 2,
-//     behavior: 'smooth',
-//   });
-// }
-// function smoothScroll() {
-//   const card = document.querySelector('.card');
-//   const cardHeight = card.getBoundingClientRect().height;
-//   const cardMarginBottom = parseInt(window.getComputedStyle(card).marginBottom);
-//   const totalCardHeight = cardHeight + cardMarginBottom;
-
-//   window.scrollBy({
-//     top: totalCardHeight * 2,
-//     behavior: 'smooth',
-//   });
-// }
 // ===============================
 //    Створення картки з описом
 // ===============================
