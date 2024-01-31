@@ -39,7 +39,7 @@ function onSabmit(e) {
 
 async function searchImages(q, page) {
   const API_KEY = '42003708-c000c9a8ce48958e4d2fbd571';
-  const BAS_EURL = 'https://pixabay.com/api';
+  const BAS_EURL = 'https://pixabay.com/api/';
 
   try {
     const response = await axios.get(BAS_EURL, {
